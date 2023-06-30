@@ -1,0 +1,155 @@
+<html>
+  <head>
+    <title>Bookmarklet for saving selected text to Apple Notes</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.3em;
+      }
+
+      .field {
+        margin-bottom: 1em;
+      }
+
+      figure {
+        display: inline-block;
+      }
+
+      figcaption {
+        text-align: center;
+      }
+
+      li {
+        margin-bottom: 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Bookmarklet for saving selected text to Apple Notes</h1>
+
+    <ol>
+      <li>
+        Install a
+        <a
+          href="https://www.icloud.com/shortcuts/e04695ca529446e6b299a4f3f73d7eb6"
+          >shortcut</a
+        >
+        (or create it <a href="shortcut.png">yourself</a>).
+      </li>
+
+      <li>
+        Press Command-Shift-B (Safari) to show Favourites Bar and drag the following link
+        there:
+        <a id="bookmarklet" href="">Save to Notes</a>.
+      </li>
+    </ol>
+
+    <p>
+      <small
+        >Tip: in Safari, you can use Command-Option-Number to access first, second, third,
+        and etc. bookmark in your bookmark bar.</small
+      >
+    </p>
+
+    <h2>Bookmarklet options</h2>
+    <details>
+      <summary>Show</summary>
+      <p>Editing fields below automatically updates the bookmarklet link.</p>
+
+      <form>
+        <div class="field">
+          <label for="template">Note template</label>
+          <textarea id="template" style="width: 30em; height: 10em">
+$SELECTED_TEXT
+
+<a href='$URL'>$TITLE</a>
+</textarea
+          >
+        </div>
+
+        <div class="field">
+          <label for="shortcutName">Shortcut name</label>
+          <input
+            size="40"
+            id="shortcutName"
+            type="text"
+            value="Create note from bookmarklet"
+          />
+        </div>
+      </form>
+    </details>
+
+    <h2>How it works</h2>
+
+    <p>
+      Bookmarklet calls a shortcut via the
+      <a href="https://support.apple.com/en-gb/guide/shortcuts/apd624386f42"
+        >URL scheme</a
+      >
+      and passes information about the page.
+    </p>
+
+    <div>
+      <figure>
+        <img src="safari.png" width="600" />
+        <figcaption>
+          <small
+            >Highlight the text, press Command-Option-1 (in Safari, given that bookmarklet
+            is first in the Favourites Bar)</small
+          >
+        </figcaption>
+      </figure>
+    </div>
+
+    <div>
+      <figure>
+        <img src="notes.png" width="600" />
+        <figcaption>
+          <small
+            >A new note appears inside the Highlights folder!<small>
+        </figcaption>
+      </figure>
+    </div>
+
+    <script>
+      function run(shortcutName, template) {
+        const selectedText = window.document.getSelection().toString();
+        const input = template
+          .replaceAll("$SELECTED_TEXT", selectedText)
+          .replaceAll("$URL", document.location.toString())
+          .replaceAll("$TITLE", document.title);
+        const url = `shortcuts://run-shortcut?name=${encodeURIComponent(
+          shortcutName
+        )}&input=${encodeURIComponent(input)}`;
+        document.location = url;
+      }
+
+      const shortcutName = document.getElementById("shortcutName").value;
+
+      document.getElementById("template").addEventListener("input", (event) => {
+        const template = event.target.value.trim().replaceAll("\n", "<br>");
+
+        const code = `javascript:${run
+          .toString()
+          .replaceAll(
+            "\n",
+            ""
+          )}; run("${shortcutName}", "${template}");`;
+
+        document
+          .getElementById("bookmarklet")
+          .setAttribute("href", `javascript:${code}`);
+      });
+
+      document
+        .getElementById("template")
+        .dispatchEvent(new Event("input", { bubbles: true }));
+    </script>
+  </body>
+</html>
