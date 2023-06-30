@@ -44,16 +44,16 @@
       </li>
 
       <li>
-        Press Command-Shift-B (Safari) to show Favourites Bar and drag the following link
-        there:
+        Press Command-Shift-B (Safari) to show Favourites Bar and drag the
+        following link there:
         <a id="bookmarklet" href="">Save to Notes</a>.
       </li>
     </ol>
 
     <p>
       <small
-        >Tip: in Safari, you can use Command-Option-Number to access first, second, third,
-        and etc. bookmark in your bookmark bar.</small
+        >Tip: in Safari, you can use Command-Option-Number to access first,
+        second, third, and etc. bookmark in your bookmark bar.</small
       >
     </p>
 
@@ -100,8 +100,8 @@ $SELECTED_TEXT
         <img src="safari.png" width="600" />
         <figcaption>
           <small
-            >Highlight the text, press Command-Option-1 (in Safari, given that bookmarklet
-            is first in the Favourites Bar)</small
+            >Highlight the text, press Command-Option-1 (in Safari, given that
+            bookmarklet is first in the Favourites Bar)</small
           >
         </figcaption>
       </figure>
@@ -111,8 +111,7 @@ $SELECTED_TEXT
       <figure>
         <img src="notes.png" width="600" />
         <figcaption>
-          <small
-            >A new note appears inside the Highlights folder!<small>
+          <small>A new note appears inside the Highlights folder!</small>
         </figcaption>
       </figure>
     </div>
@@ -137,10 +136,7 @@ $SELECTED_TEXT
 
         const code = `javascript:${run
           .toString()
-          .replaceAll(
-            "\n",
-            ""
-          )}; run("${shortcutName}", "${template}");`;
+          .replaceAll("\n", "")}; run("${shortcutName}", "${template}");`;
 
         document
           .getElementById("bookmarklet")
