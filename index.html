@@ -134,7 +134,7 @@ $SELECTED_TEXT
       document.getElementById("template").addEventListener("input", (event) => {
         const template = event.target.value.trim().replaceAll("\n", "<br>");
 
-        const code = `javascript:${run
+        const code = `${run
           .toString()
           .replaceAll("\n", "")}; run("${shortcutName}", "${template}");`;
 
